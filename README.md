@@ -1,9 +1,11 @@
 docker-compose build
 
 docker-compose up -d
+
 This will take a while since the app will start only until all mysql servers are ready
 
 DB Migrations:
+
 docker-compose exec backend-command npm run typeorm migration:run -- -d build/src/database.source.js
 docker-compose exec backend-command npm run typeorm migration:run -- -d build/src/query-database.source.js
 
