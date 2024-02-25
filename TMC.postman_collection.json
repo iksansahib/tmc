@@ -1,0 +1,132 @@
+{
+	"info": {
+		"_postman_id": "f8b20731-1cfa-4be1-bfd6-88affed3975c",
+		"name": "TMC",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3751368"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8099/api/products",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "API-KEY",
+						"value": "123",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"sku\": \"sku106\",\n    \"name\": \"name\",\n    \"price\": 1000,\n    \"stock\": 10,\n    \"category\": {\n        \"id\": \"3843f3a4-e316-4485-906b-018624ac1146\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8099/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8099",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8099/api/categories",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "api-key",
+						"value": "123",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"category\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8099/api/categories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8099",
+					"path": [
+						"api",
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8099/api/search?size=5&page=1",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "api-key",
+						"value": "123",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"sku\": \"sku1\",\n    \"name\": \"name\",\n    \"price\": 1000,\n    \"stock\": 10,\n    \"categoryId\": \"4552bc9f-7eba-4b51-a4fa-b2716ca00cce\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8099/api/search?size=5&page=1&sku[]=sku106",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8099",
+					"path": [
+						"api",
+						"search"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "5"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "sku[]",
+							"value": "sku106"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

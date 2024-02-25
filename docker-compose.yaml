@@ -1,0 +1,55 @@
+version: "3.9"
+services:
+  mysql-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: test_database
+      MYSQL_USER: db_user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3399:3306"
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+      start_period: 5s
+      interval: 5s
+      timeout: 5s
+      retries: 55      
+
+  mysql-db-query:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: test_database_query
+      MYSQL_USER: db_user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3406:3306"
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+      start_period: 5s
+      interval: 5s
+      timeout: 5s
+      retries: 55      
+  cache:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6399:6379'
+    command: redis-server --save 20 1 --loglevel warning
+  backend-command:
+    container_name: backend-command
+    environment:
+      - API_KEY=123
+    build:
+      context: .
+      dockerfile: ./product-service/Dockerfile
+    ports:
+      - 8099:3000
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+      mysql-db-query:
+        condition: service_healthy
+      cache:
+        condition: service_started
